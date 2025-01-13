@@ -5,6 +5,26 @@
 Escriba el codigo que ejecute la accion solicitada en cada pregunta.
 """
 
+import os
+import pandas as pd
+
+def f(a, b, c):
+    d = [e for e in os.listdir(a) if os.path.isdir(os.path.join(a, e))]
+    g = []  
+    for h in d:
+        ruta_h = os.path.join(a, h)
+        aj = [archivo for archivo in os.listdir(ruta_h)]
+        for archivo in aj:
+            hola = os.path.join(ruta_h, archivo)
+            with open(hola, 'r', encoding='utf-8') as file:
+                ff = file.readline().strip()
+                g.append([ff, h])
+    df = pd.DataFrame(g, columns=["phrase", "target"])
+    if not os.path.exists(b):
+        os.makedirs(b)
+    ans = os.path.join(b, c)
+    df.to_csv(ans, index=False)
+
 
 def pregunta_01():
     """
@@ -71,3 +91,9 @@ def pregunta_01():
 
 
     """
+
+
+    f("files/input/test", "files/output", "test_dataset.csv")
+    f("files/input/train", "files/output", "train_dataset.csv")
+
+pregunta_01()
